@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
               ),
               height: MediaQuery.of(context).size.height / 1.9,
               width: double.maxFinite,
-              child: SignUpForm(formKey: _formKey, name: name, email: email, password: password),
+              child: SignUpForm(formKey: _formKey, name: name, email: email, password: password,scaffoldKey: _scaffoldKey),
             ),
           ),
           Positioned(
