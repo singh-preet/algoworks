@@ -14,12 +14,15 @@ class SignUpForm extends StatelessWidget {
     @required this.name,
     @required this.email,
     @required this.password,
-  }) : _formKey = formKey, super(key: key);
+    @required GlobalKey<ScaffoldState> scaffoldKey,
+
+  }): _formKey = formKey, _scaffoldKey = scaffoldKey, super(key: key);
 
   final GlobalKey<FormState> _formKey;
   final TextEditingController name;
   final TextEditingController email;
   final TextEditingController password;
+  final GlobalKey<ScaffoldState> _scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +97,78 @@ class SignUpForm extends StatelessWidget {
 //                        },
             ),
           ),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  print(isLoggedIn);
+                  handleGoogleSignIn().whenComplete(() {
+                    isLoggedIn
+                        ? Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ))
+                        : _scaffoldKey.currentState.showSnackBar(
+                      SnackBar(
+                        content:
+                        Text('Login cancelled by user'),
+                        backgroundColor: red,
+                      ),
+                    );
+                  });
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  child: Icon(
+                    FontAwesomeIcons.google,
+                    color: white,
+                  ),
+                  decoration: BoxDecoration(
+                    color: red,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  logIn().whenComplete(() {
+                    isLoggedIn
+                        ? Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Home(),
+                      ),
+                    )
+                        : _scaffoldKey.currentState.showSnackBar(
+                      SnackBar(
+                        content:
+                        Text('Login cancelled by user'),
+                        backgroundColor: red,
+                      ),
+                    );
+                  });
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  child: Icon(
+                    FontAwesomeIcons.facebookF,
+                    color: white,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              )
+            ],
+          ),
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.all(12),
